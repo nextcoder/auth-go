@@ -18,6 +18,16 @@ type AuthResponse struct {
 	Token string `json:"token"`
 }
 
+func GetAllUsers() ([]User, error) {
+	var users []User
+	if err := Database.Find(&users).Error; err != nil {
+		// В случае ошибки возвращаем пустой список и саму ошибку
+		return nil, err
+	}
+	// Возвращаем список пользователей без ошибки, если все прошло успешно
+	return users, nil
+}
+
 // Fetches a user from the database
 func FetchUser(id uint) (*User, error) {
 	var user User
